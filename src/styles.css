@@ -1,0 +1,7 @@
+@import "tailwindcss";
+button {
+  @apply text-white text-xl font-bold p-3 m-1 flex-col flex items-center justify-center;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
