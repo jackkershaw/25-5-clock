@@ -1,8 +1,4 @@
-Objective: Build an app that is functionally similar to this: https://25--5-clock.freecodecamp.rocks.
-
-User Story #18: When I first click the element with id="start_stop", the timer should begin running from the value currently displayed in id="session-length", even if the value has been incremented or decremented from the original value of 25.
-
-User Story #11: When I click the element with the id of reset, any running timer should be stopped, the value within id="break-length" should return to 5, the value within id="session-length" should return to 25, and the element with id="time-left" should reset to its default state.
+Get timer working, use UseEffect, will have to use something like this: [useEffect example timer](https://www.geeksforgeeks.org/creating-a-timer-component-with-useeffect-hook-in-react/)
 
 User Story #19: If the timer is running, the element with the id of time-left should display the remaining time in mm:ss format (decrementing by a value of 1 and updating the display every 1000ms).
 

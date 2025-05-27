@@ -1,20 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timeLeft, setTimeLeft] = useState(25);
-  const [timerOn, setTimerOn] = useState(false);
+  const [timeLeft, setTimeLeft] = useState(25 * 60 * 1000);
+  const [intervalID, setIntervalID] = useState(null);
 
   const reset = () => {
-    setTimerOn(false);
     setBreakLength(5);
     setSessionLength(25);
     setTimeLeft(25);
   };
 
-  const start;
+  const countdown = () => setTimeLeft((timeLeft) => timeLeft - 1000);
 
+  const startStop = () => {
+    if (intervalID === null) {
+      setIntervalID(setInterval(countdown, 1000));
+    } else {
+      clearInterval(intervalID);
+      setIntervalID(null);
+    }
+  };
   return (
     <div className="flex flex-col items-center justify-center p-10">
       <h1>25+5 Clock</h1>
@@ -50,6 +57,7 @@ function App() {
           onClick={() => {
             if (sessionLength > 0) {
               setSessionLength(sessionLength - 1);
+              setTimeLeft(timeLeft - 1);
             }
           }}
         >
@@ -60,6 +68,7 @@ function App() {
           onClick={() => {
             if (sessionLength < 60) {
               setSessionLength(sessionLength + 1);
+              setTimeLeft(timeLeft + 1);
             }
           }}
         >
@@ -74,7 +83,9 @@ function App() {
             second: "numeric",
           }).format(timeLeft * 60 * 1000)}
         </p>
-        <button id="start_stop">[]</button>
+        <button id="start_stop" onClick={startStop}>
+          []
+        </button>
         <button id="reset" onClick={reset}>
           X
         </button>
