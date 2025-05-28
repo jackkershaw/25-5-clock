@@ -3,25 +3,38 @@ import { useState, useEffect } from "react";
 function App() {
   const [breakLength, setBreakLength] = useState(5);
   const [sessionLength, setSessionLength] = useState(25);
-  const [timeLeft, setTimeLeft] = useState(25 * 60 * 1000);
-  const [intervalID, setIntervalID] = useState(null);
+  const [timeLeft, setTimeLeft] = useState(25);
+  const [timerOn, setTimerOn] = useState(false);
 
   const reset = () => {
     setBreakLength(5);
     setSessionLength(25);
     setTimeLeft(25);
+    setTimerOn(false);
   };
-
-  const countdown = () => setTimeLeft((timeLeft) => timeLeft - 1000);
 
   const startStop = () => {
-    if (intervalID === null) {
-      setIntervalID(setInterval(countdown, 1000));
+    if (timerOn) {
+      setTimerOn(false);
     } else {
-      clearInterval(intervalID);
-      setIntervalID(null);
+      setTimerOn(true);
     }
   };
+
+  const countDown = () => {
+    setTimeLeft((timeLeft) => timeLeft - 0.01666667);
+  };
+
+  useEffect(() => {
+    if (!timerOn) return;
+    const interval = setInterval(() => {
+      if (timeLeft > 0) {
+        countDown();
+      }
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [timerOn, timeLeft]);
+
   return (
     <div className="flex flex-col items-center justify-center p-10">
       <h1>25+5 Clock</h1>
@@ -31,7 +44,7 @@ function App() {
         <button
           id="break-decrement"
           onClick={() => {
-            if (breakLength > 0) {
+            if (breakLength > 1) {
               setBreakLength(breakLength - 1);
             }
           }}
@@ -55,7 +68,7 @@ function App() {
         <button
           id="session-decrement"
           onClick={() => {
-            if (sessionLength > 0) {
+            if (sessionLength > 1) {
               setSessionLength(sessionLength - 1);
               setTimeLeft(timeLeft - 1);
             }
