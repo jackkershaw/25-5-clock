@@ -1,10 +1,4 @@
-Get timer working, use UseEffect, will have to use something like this: [useEffect example timer](https://www.geeksforgeeks.org/creating-a-timer-component-with-useeffect-hook-in-react/)
-
-User Story #19: If the timer is running, the element with the id of time-left should display the remaining time in mm:ss format (decrementing by a value of 1 and updating the display every 1000ms).
-
-User Story #20: If the timer is running and I click the element with id="start_stop", the countdown should pause.
-
-User Story #21: If the timer is paused and I click the element with id="start_stop", the countdown should resume running from the point at which it was paused.
+- Set date properly in MM:SS format not international date format - this will just need to be total time in seconds
 
 User Story #22: When a session countdown reaches zero (NOTE: timer MUST reach 00:00), and a new countdown begins, the element with the id of timer-label should display a string indicating a break has begun.
 
