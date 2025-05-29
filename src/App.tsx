@@ -13,14 +13,19 @@ function App() {
     setSessionLength(25 * 60);
     setTimeLeft(25 * 60);
     setTimerOn(false);
+    setBreakOn(false);
     setSoundPlaying(false);
   };
 
   const startStop = () => {
     if (timerOn) {
       setTimerOn(false);
-    } else {
+    } else if (!breakOn) {
       setTimerOn(true);
+    } else if (breakOn) {
+      setBreakOn(false);
+    } else if (!timerOn) {
+      setBreakOn(true);
     }
   };
 
@@ -71,12 +76,12 @@ function App() {
       <h1>25+5 Clock</h1>
       <div>
         <h2 id="break-label">Break length</h2>
-        <p id="break-length">{breakLength}</p>
+        <p id="break-length">{breakLength / 60}</p>
         <button
           id="break-decrement"
           onClick={() => {
-            if (breakLength > 1) {
-              setBreakLength(breakLength - 1);
+            if (breakLength > 60) {
+              setBreakLength(breakLength - 60);
             }
           }}
         >
@@ -85,8 +90,8 @@ function App() {
         <button
           id="break-increment"
           onClick={() => {
-            if (breakLength < 60) {
-              setBreakLength(breakLength + 1);
+            if (breakLength < 3600) {
+              setBreakLength(breakLength + 60);
             }
           }}
         >
@@ -95,13 +100,13 @@ function App() {
       </div>
       <div>
         <h2 id="session-label">Session length</h2>
-        <p id="session-length">{sessionLength}</p>
+        <p id="session-length">{sessionLength / 60}</p>
         <button
           id="session-decrement"
           onClick={() => {
-            if (sessionLength > 1) {
-              setSessionLength(sessionLength - 1);
-              setTimeLeft(timeLeft - 1);
+            if (sessionLength > 60) {
+              setSessionLength(sessionLength - 60);
+              setTimeLeft(timeLeft - 60);
             }
           }}
         >
@@ -110,9 +115,9 @@ function App() {
         <button
           id="session-increment"
           onClick={() => {
-            if (sessionLength < 60) {
-              setSessionLength(sessionLength + 1);
-              setTimeLeft(timeLeft + 1);
+            if (sessionLength < 3600) {
+              setSessionLength(sessionLength + 60);
+              setTimeLeft(timeLeft + 60);
             }
           }}
         >
@@ -121,7 +126,8 @@ function App() {
       </div>
       <div>
         <h2 id="timer-label">
-          {timerOn && <span>Session</span>}
+          Session
+          {timerOn && <span>Timer</span>}
           {breakOn && <span>Break started</span>}
         </h2>
         <p id="time-left">{timeString}</p>
