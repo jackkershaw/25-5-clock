@@ -1,6 +1,4 @@
-should be able to start and stop break
-
-Fix failing tests
+Fix failing tests - two audio ones
 
 Once you're done, submit the URL to your working project with all its tests passing.
 
