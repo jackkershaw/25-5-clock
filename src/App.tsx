@@ -49,11 +49,11 @@ function App() {
 
   useEffect(() => {
     if (!timerOn && !breakOn) return;
+    if (timeLeft === 0) {
+      playSound();
+    }
     const interval = setInterval(() => {
-      if (timeLeft > 0) {
-        countDown();
-      } else if (timeLeft == 0) {
-        playSound();
+      if (timeLeft === 0) {
         if (timerOn) {
           setBreakOn(true);
           setTimeLeft(breakLength);
@@ -63,6 +63,8 @@ function App() {
           setTimeLeft(sessionLength);
           setBreakOn(false);
         }
+      } else if (timeLeft > 0) {
+        countDown();
       }
     }, 1000);
     return () => clearInterval(interval);
