@@ -6,7 +6,6 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(25 * 60);
   const [timerOn, setTimerOn] = useState(false);
   const [breakOn, setBreakOn] = useState(false);
-  const [soundPlaying, setSoundPlaying] = useState(false);
 
   const reset = () => {
     setBreakLength(5 * 60);
@@ -14,7 +13,7 @@ function App() {
     setTimeLeft(25 * 60);
     setTimerOn(false);
     setBreakOn(false);
-    setSoundPlaying(false);
+    pauseSound();
   };
 
   const startStop = () => {
@@ -33,14 +32,20 @@ function App() {
     setTimeLeft((timeLeft) => timeLeft - 1);
   };
 
-  useEffect(() => {
-    if (soundPlaying) {
-      const audioElement = document.getElementById(
-        "beep"
-      ) as HTMLAudioElement;
-      audioElement.play();
-    }
-  });
+  const playSound = () => {
+    const audioElement = document.getElementById(
+      "beep"
+    ) as HTMLAudioElement;
+    audioElement.play();
+  };
+
+  const pauseSound = () => {
+    const audioElement = document.getElementById(
+      "beep"
+    ) as HTMLAudioElement;
+    audioElement.pause();
+    audioElement.load();
+  };
 
   useEffect(() => {
     if (!timerOn && !breakOn) return;
@@ -48,13 +53,12 @@ function App() {
       if (timeLeft > 0) {
         countDown();
       } else if (timeLeft == 0) {
+        playSound();
         if (timerOn) {
-          setSoundPlaying(true);
           setBreakOn(true);
           setTimeLeft(breakLength);
           setTimerOn(false);
         } else if (breakOn) {
-          setSoundPlaying(true);
           setTimerOn(true);
           setTimeLeft(sessionLength);
           setBreakOn(false);
